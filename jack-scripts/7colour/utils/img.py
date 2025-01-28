@@ -32,3 +32,11 @@ def get_dir_image():
 
     # Open the file
     return Image.open(f"{dir}/{file}")
+
+def get_file_image(path):
+    file = os.path.expanduser(path)
+
+    if not os.path.exists(file):
+        return Image.new("RGB", (800, 480), "white")
+
+    return Image.open(file)

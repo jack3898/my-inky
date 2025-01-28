@@ -2,9 +2,14 @@
 
 from utils.btn import handle_buttons
 from inky.auto import auto
-from utils.img import get_dir_image, get_unsplash_image
+from utils.img import get_dir_image, get_unsplash_image, get_file_image
 from utils.timer import handle_timer
-import asyncio
+
+def boot():
+    inky = auto(ask_user=True)
+    image = get_file_image("./assets/ready.png")
+    inky.set_image(image)
+    inky.show()
 
 def load_dir_image():
     print("Loading image from directory...")
@@ -35,7 +40,7 @@ Press button 1 to load a random image from your images directory.
 Press button 2 to load a random image from Unsplash.
 
 Press Ctrl+C to exit!
-
 """)
 
-handle_buttons(handle_button),
+boot()
+handle_buttons(handle_button)
