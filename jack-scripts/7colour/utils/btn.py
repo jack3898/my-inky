@@ -3,18 +3,9 @@
 import gpiod
 import gpiodevice
 from gpiod.line import Bias, Direction, Edge
+import asyncio
 
-def handle_btn(callback):
-    print(
-        """Press any button and a new image will magically appear!
-
-Well, it isn't magic, it just goes to a website called Unsplash.
-
-Press Ctrl+C to exit!
-
-"""
-    )
-
+def handle_buttons(callback):
     # GPIO pins for each button (from top to bottom)
     # These will vary depending on platform and the ones
     # below should be correct for Raspberry Pi 5.
