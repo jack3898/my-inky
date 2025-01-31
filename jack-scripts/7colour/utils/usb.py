@@ -9,11 +9,8 @@ def run_command(command):
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
         return result.stdout.strip(), result.stderr.strip()
     except Exception as e:
+        print(f"Exception raised when running command '{command}', {e}")
         return "", str(e)
-
-def check_dwc2():
-    output, _ = run_command("lsmod | grep dwc2")
-    return "dwc2" in output
 
 def check_udc():
     output, _ = run_command("ls /sys/class/udc/")
@@ -28,8 +25,10 @@ def create_backing_file_if_not_exists():
     else:
         print("Backing file already exists.")
 
-def enable_otg():
-    if not check_dwc2():
+def enable_dwc2():
+    output, _ = run_command("lsmod | grep dwc2")
+
+    if not "dwc2" in output:
         print("Loading dwc2 module...")
         run_command("sudo modprobe dwc2")
 
@@ -73,7 +72,7 @@ def toggle_usb_connectivity(usb = False):
 
     if usb:
         print("Loading necessary kernel modules...")
-        enable_otg()    
+        enable_dwc2()    
         
         print("Setting up Raspberry Pi as a USB storage device...\n")
         enable_usb_storage()
