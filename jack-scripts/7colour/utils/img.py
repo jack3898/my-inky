@@ -14,9 +14,7 @@ def get_unsplash_image():
     else:
         return Image.new("RGB", (800, 480), "white")
 
-def get_dir_image():
-    dir = os.path.expanduser("~/images")
-
+def get_dir_image(dir):
     # If dir does not exist
     if not os.path.exists(dir):
         return Image.new("RGB", (800, 480), "white")
@@ -25,7 +23,7 @@ def get_dir_image():
     files = os.listdir(dir)
 
     # filter out non-image files
-    files = [f for f in files if f.endswith(".png") or f.endswith(".jpg")]
+    files = [f for f in files if (f.endswith(".png") or f.endswith(".jpg")) and not f.startswith(".")]
 
     # Pick a random file
     file = random.choice(files)
